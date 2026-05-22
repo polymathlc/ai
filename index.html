@@ -1,0 +1,2604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free AI Training for Your Team — Polymath Learning Centre</title>
+  <style>
+    /* =========================================================
+       POLYMATH DESIGN SYSTEM — AI Training Booking
+       Accent: Soft orange (business / general)
+       ========================================================= */
+    :root {
+      /* Backgrounds */
+      --bg-page: #FAFAFA;
+      --bg-card: #FFFFFF;
+      --bg-faint: #F7F7F5;
+      --bg-muted: #F0EFEC;
+
+      /* Text */
+      --text-primary: #1A1A1A;
+      --text-secondary: #555555;
+      --text-tertiary: #888888;
+      --text-inverse: #FFFFFF;
+
+      /* Accent — soft orange (business/general) */
+      --accent: #FFE0B2;
+      --accent-hover: #FFCC80;
+      --accent-strong: #FB8C00;
+      --accent-deep: #E65100;
+      --accent-tint: #FFF8EE;
+
+      /* Secondary accents */
+      --success: #66BB6A;
+      --success-tint: #E8F5E9;
+      --danger: #EF5350;
+      --danger-tint: #FFEBEE;
+      --info: #42A5F5;
+      --info-tint: #E3F2FD;
+
+      /* Borders */
+      --border-faint: #ECEAE5;
+      --border-light: #E0DED8;
+      --border-medium: #C9C6BF;
+
+      /* Shadows */
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06);
+      --shadow-card-hover: 0 2px 6px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.09);
+      --shadow-button: 0 1px 2px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-button-hover: 0 2px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-elevated: 0 4px 6px rgba(0,0,0,0.05), 0 10px 30px rgba(0,0,0,0.1);
+      --shadow-modal: 0 8px 16px rgba(0,0,0,0.08), 0 24px 60px rgba(0,0,0,0.14);
+
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+
+      /* Radius */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
+      --radius-pill: 999px;
+
+      /* Type */
+      --font-base: 'Century Gothic', CenturyGothic, AppleGothic, 'Avenir Next', 'Helvetica Neue', sans-serif;
+      --font-numeric: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    /* Roboto only for "?" characters and numerals — preserves Century Gothic elsewhere */
+    @font-face {
+      font-family: 'RobotoForDigits';
+      src: local('Roboto'), local('Roboto-Regular');
+      unicode-range: U+003F, U+0030-0039;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: 'RobotoForDigits', var(--font-base);
+      background: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+    .polymath-header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-faint);
+      padding: var(--space-md) var(--space-xl);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: saturate(180%) blur(8px);
+      background-color: rgba(255, 255, 255, 0.92);
+    }
+
+    .polymath-logo {
+      height: 60px;
+      width: auto;
+      display: block;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .header-right {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .print-button {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 8px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      box-shadow: var(--shadow-button);
+      transition: box-shadow 0.25s ease, transform 0.25s ease, background 0.25s ease;
+    }
+
+    .print-button:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-button-hover);
+      background: var(--bg-faint);
+    }
+
+    .print-button:active {
+      transform: translateY(0.5px);
+    }
+
+    .print-button svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* =========================================================
+       LAYOUT
+       ========================================================= */
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: var(--space-2xl) var(--space-lg) var(--space-3xl);
+      animation: fadeInUp 0.6s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stagger > * {
+      opacity: 0;
+      animation: fadeInUp 0.55s ease forwards;
+    }
+    .stagger > *:nth-child(1) { animation-delay: 0.05s; }
+    .stagger > *:nth-child(2) { animation-delay: 0.13s; }
+    .stagger > *:nth-child(3) { animation-delay: 0.21s; }
+    .stagger > *:nth-child(4) { animation-delay: 0.29s; }
+    .stagger > *:nth-child(5) { animation-delay: 0.37s; }
+    .stagger > *:nth-child(6) { animation-delay: 0.45s; }
+    .stagger > *:nth-child(7) { animation-delay: 0.53s; }
+    .stagger > *:nth-child(8) { animation-delay: 0.61s; }
+
+    /* =========================================================
+       HERO
+       ========================================================= */
+    .hero {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      background: var(--accent-tint);
+      color: var(--accent-deep);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.78rem;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-md);
+    }
+
+    .hero h1 {
+      font-size: 2.3rem;
+      font-weight: bold;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      margin-bottom: var(--space-md);
+      color: var(--text-primary);
+    }
+
+    .hero h1 .accent-word {
+      color: var(--accent-deep);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       WHAT YOU GET / NO STRINGS BANNER
+       ========================================================= */
+    .promise-banner {
+      background: linear-gradient(135deg, var(--accent-tint) 0%, #FFF4E4 100%);
+      border: 1px solid #FFE0B2;
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin: var(--space-2xl) 0;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .promise-banner::before {
+      content: "";
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(255,255,255,0.6), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .promise-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--accent-deep);
+      margin-bottom: var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .promise-title-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--accent-deep);
+      color: white;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .promise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .promise-item {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      display: flex;
+      gap: var(--space-sm);
+      align-items: flex-start;
+    }
+
+    .promise-check {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: var(--success);
+      border-radius: 50%;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-top: 2px;
+    }
+
+    .promise-item-text {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .promise-item-text strong {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--text-primary);
+    }
+
+    .promise-item-text span {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+    }
+
+    /* =========================================================
+       TRAINER PROFILE
+       ========================================================= */
+    .trainer-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-card);
+      margin-bottom: var(--space-xl);
+      border: 1px solid var(--border-faint);
+      display: flex;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    .trainer-photo {
+      flex-shrink: 0;
+      width: 180px;
+      height: 180px;
+      border-radius: var(--radius-lg);
+      object-fit: cover;
+      object-position: top center;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-card);
+      background: var(--bg-faint);
+    }
+
+    .trainer-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .trainer-eyebrow {
+      display: inline-block;
+      background: var(--accent-tint);
+      color: var(--accent-deep);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+    }
+
+    .trainer-body h2 {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: var(--space-sm);
+      letter-spacing: 0.01em;
+    }
+
+    .trainer-body p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .trainer-credentials {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .trainer-credentials li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .trainer-cred-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: var(--accent-tint);
+      color: var(--accent-deep);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-top: 1px;
+    }
+
+    /* =========================================================
+       CONTENT CARD
+       ========================================================= */
+    .content-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-card);
+      margin-bottom: var(--space-xl);
+      border: 1px solid var(--border-faint);
+    }
+
+    .content-card h2 {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: var(--space-md);
+      color: var(--text-primary);
+      letter-spacing: 0.01em;
+    }
+
+    .content-card p {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-sm);
+      font-size: 1rem;
+    }
+
+    .content-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .session-curriculum {
+      list-style: none;
+      padding: 0;
+      margin-top: var(--space-md);
+    }
+
+    .session-curriculum li {
+      padding: var(--space-sm) 0 var(--space-sm) 28px;
+      position: relative;
+      color: var(--text-primary);
+      border-bottom: 1px solid var(--border-faint);
+      font-size: 0.98rem;
+    }
+
+    .session-curriculum li:last-child {
+      border-bottom: none;
+    }
+
+    .session-curriculum li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent-deep);
+      font-weight: bold;
+    }
+
+    /* =========================================================
+       CALENDAR + SLOT PICKER
+       ========================================================= */
+    .calendar-wrap {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-card);
+      margin-bottom: var(--space-xl);
+      border: 1px solid var(--border-faint);
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-lg);
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+
+    .calendar-title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.01em;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .nav-button {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      background: var(--bg-card);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-button);
+      transition: box-shadow 0.25s ease, transform 0.25s ease, background 0.25s ease;
+      color: var(--text-secondary);
+    }
+
+    .nav-button:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-button-hover);
+      background: var(--accent-tint);
+      color: var(--accent-deep);
+    }
+
+    .nav-button:active {
+      transform: translateY(0.5px);
+    }
+
+    .nav-button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .month-label {
+      font-size: 1.05rem;
+      font-weight: bold;
+      min-width: 160px;
+      text-align: center;
+      color: var(--text-primary);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .calendar-dayname {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: var(--text-tertiary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: var(--space-sm) 0;
+    }
+
+    .calendar-cell {
+      aspect-ratio: 1;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      background: var(--bg-faint);
+      color: var(--text-primary);
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .calendar-cell.empty {
+      background: transparent;
+      cursor: default;
+    }
+
+    .calendar-cell.weekend {
+      background: var(--bg-page);
+      color: var(--text-tertiary);
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    .calendar-cell.past {
+      background: var(--bg-page);
+      color: var(--text-tertiary);
+      cursor: not-allowed;
+      opacity: 0.35;
+    }
+
+    .calendar-cell.available {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+    }
+
+    .calendar-cell.available:hover {
+      background: var(--accent-tint);
+      border-color: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-button);
+    }
+
+    .calendar-cell.selected {
+      background: var(--accent-strong);
+      color: white;
+      border-color: var(--accent-deep);
+      box-shadow: 0 2px 8px rgba(251, 140, 0, 0.35);
+      font-weight: bold;
+    }
+
+    .calendar-cell.fully-booked {
+      background: var(--bg-page);
+      color: var(--text-tertiary);
+      cursor: not-allowed;
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    .calendar-cell.today {
+      outline: 2px solid var(--accent-strong);
+      outline-offset: -2px;
+    }
+
+    .availability-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--success);
+      margin-top: 3px;
+    }
+
+    .calendar-cell.fully-booked .availability-dot {
+      background: var(--danger);
+    }
+
+    .calendar-cell.selected .availability-dot {
+      background: white;
+    }
+
+    .calendar-legend {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      border: 1px solid var(--border-light);
+    }
+
+    .swatch-available { background: var(--bg-card); }
+    .swatch-selected { background: var(--accent-strong); border-color: var(--accent-deep); }
+    .swatch-booked { background: var(--bg-page); }
+
+    /* =========================================================
+       SLOT PICKER
+       ========================================================= */
+    .slot-picker {
+      margin-top: var(--space-xl);
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--border-faint);
+      animation: fadeInUp 0.4s ease;
+    }
+
+    .slot-picker-title {
+      font-size: 1.05rem;
+      font-weight: bold;
+      margin-bottom: var(--space-md);
+      color: var(--text-primary);
+    }
+
+    .slot-picker-date {
+      color: var(--accent-deep);
+    }
+
+    .slot-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .slot-option {
+      border: 2px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      cursor: pointer;
+      background: var(--bg-card);
+      transition: all 0.25s ease;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .slot-option:hover:not(:disabled) {
+      border-color: var(--accent-hover);
+      background: var(--accent-tint);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-button-hover);
+    }
+
+    .slot-option.selected {
+      border-color: var(--accent-deep);
+      background: var(--accent-tint);
+      box-shadow: 0 0 0 4px rgba(251, 140, 0, 0.15);
+    }
+
+    .slot-option:disabled,
+    .slot-option.booked {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: var(--bg-page);
+      border-color: var(--border-faint);
+    }
+
+    .slot-time {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .slot-meta {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .slot-status {
+      font-size: 0.78rem;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .slot-status.available { color: var(--success); }
+    .slot-status.taken { color: var(--danger); }
+
+    /* =========================================================
+       FORM
+       ========================================================= */
+    .booking-form {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-card);
+      margin-bottom: var(--space-xl);
+      border: 1px solid var(--border-faint);
+    }
+
+    .form-header {
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-header h2 {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 4px;
+      letter-spacing: 0.01em;
+    }
+
+    .form-header p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md) var(--space-lg);
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      font-size: 0.88rem;
+      font-weight: bold;
+      color: var(--text-primary);
+      letter-spacing: 0.01em;
+    }
+
+    .form-field label .required {
+      color: var(--danger);
+      margin-left: 2px;
+    }
+
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      background: var(--bg-faint);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      font-size: 0.98rem;
+      color: var(--text-primary);
+      transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.5;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus {
+      outline: none;
+      background: var(--bg-card);
+      border-color: var(--accent-strong);
+      box-shadow: 0 0 0 4px rgba(251, 140, 0, 0.12);
+    }
+
+    .form-field .field-hint {
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+
+    .form-field .field-error {
+      font-size: 0.82rem;
+      color: var(--danger);
+      margin-top: 4px;
+      display: none;
+    }
+
+    .form-field.error input,
+    .form-field.error textarea,
+    .form-field.error select {
+      border-color: var(--danger);
+      background: var(--danger-tint);
+    }
+
+    .form-field.error .field-error {
+      display: block;
+    }
+
+    /* Selected slot summary inside form */
+    .selected-summary {
+      background: var(--accent-tint);
+      border: 1px solid var(--accent-hover);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+
+    .selected-summary-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-strong);
+      color: white;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .selected-summary-text {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .selected-summary-text strong {
+      display: block;
+      color: var(--accent-deep);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .selected-summary-text span {
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .change-slot-btn {
+      background: transparent;
+      border: 1px solid var(--accent-deep);
+      color: var(--accent-deep);
+      padding: 6px 12px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .change-slot-btn:hover {
+      background: var(--accent-strong);
+      color: white;
+    }
+
+    /* =========================================================
+       CONSENT / TERMS
+       ========================================================= */
+    .consent-section {
+      background: var(--bg-faint);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-top: var(--space-md);
+      grid-column: 1 / -1;
+    }
+
+    .consent-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      cursor: pointer;
+      padding: 6px 0;
+    }
+
+    .consent-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--accent-strong);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .consent-row span {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .consent-row span strong {
+      color: var(--text-primary);
+    }
+
+    /* =========================================================
+       SUBMIT BUTTON
+       ========================================================= */
+    .submit-row {
+      margin-top: var(--space-xl);
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.98rem;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: var(--shadow-button);
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--accent-strong);
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--accent-deep);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-button-hover);
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: translateY(0.5px);
+    }
+
+    .btn-primary:disabled {
+      background: var(--border-medium);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      box-shadow: none;
+      border: 1px solid var(--border-light);
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-faint);
+      color: var(--text-primary);
+    }
+
+    .btn-loading {
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    .btn-spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* =========================================================
+       SUCCESS MODAL
+       ========================================================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 20, 20, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-lg);
+      animation: fadeIn 0.25s ease;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      max-width: 500px;
+      width: 100%;
+      padding: var(--space-2xl);
+      text-align: center;
+      box-shadow: var(--shadow-modal);
+      animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .success-check {
+      width: 72px;
+      height: 72px;
+      background: var(--success-tint);
+      border-radius: 50%;
+      margin: 0 auto var(--space-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-check svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .success-check svg path {
+      stroke: var(--success);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+      animation: drawCheck 0.6s ease forwards 0.2s;
+    }
+
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .modal h3 {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-sm);
+      font-weight: bold;
+    }
+
+    .modal p {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-md);
+      line-height: 1.6;
+    }
+
+    .booking-recap {
+      background: var(--bg-faint);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      text-align: left;
+      margin: var(--space-lg) 0;
+    }
+
+    .booking-recap-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 0.9rem;
+      border-bottom: 1px dashed var(--border-faint);
+    }
+
+    .booking-recap-row:last-child {
+      border-bottom: none;
+    }
+
+    .booking-recap-row span:first-child {
+      color: var(--text-tertiary);
+      letter-spacing: 0.02em;
+    }
+
+    .booking-recap-row span:last-child {
+      color: var(--text-primary);
+      font-weight: bold;
+      text-align: right;
+      max-width: 60%;
+      word-break: break-word;
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+    footer {
+      text-align: center;
+      padding: var(--space-2xl) var(--space-lg);
+      color: var(--text-tertiary);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-faint);
+      margin-top: var(--space-3xl);
+      background: var(--bg-card);
+    }
+
+    footer a {
+      color: var(--accent-deep);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* =========================================================
+       TOAST / ALERT
+       ========================================================= */
+    .toast {
+      position: fixed;
+      top: 90px;
+      right: 24px;
+      background: var(--danger-tint);
+      color: var(--danger);
+      border: 1px solid var(--danger);
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-elevated);
+      z-index: 999;
+      display: none;
+      max-width: 320px;
+      font-size: 0.92rem;
+      animation: slideInRight 0.35s ease;
+    }
+
+    .toast.show {
+      display: block;
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* =========================================================
+       LOADING STATE
+       ========================================================= */
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-lg);
+      z-index: 5;
+      display: none;
+    }
+
+    .loading-overlay.active {
+      display: flex;
+    }
+
+    .loading-spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border-light);
+      border-top-color: var(--accent-strong);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+    @media (max-width: 720px) {
+      .hero h1 { font-size: 1.7rem; }
+      .hero-sub { font-size: 1rem; }
+
+      main {
+        padding: var(--space-lg) var(--space-md) var(--space-2xl);
+      }
+
+      .polymath-header {
+        padding: var(--space-sm) var(--space-md);
+      }
+
+      .polymath-logo {
+        height: 48px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar-wrap,
+      .content-card,
+      .booking-form,
+      .promise-banner,
+      .trainer-card {
+        padding: var(--space-md);
+      }
+
+      .trainer-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .trainer-photo {
+        width: 150px;
+        height: 150px;
+      }
+
+      .trainer-credentials li {
+        text-align: left;
+      }
+
+      .calendar-cell {
+        font-size: 0.85rem;
+      }
+
+      .month-label {
+        min-width: 120px;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .calendar-grid {
+        gap: 2px;
+      }
+      .calendar-cell {
+        font-size: 0.78rem;
+      }
+      .calendar-dayname {
+        font-size: 0.65rem;
+      }
+    }
+
+    /* =========================================================
+       PRINT STYLES
+       ========================================================= */
+    @page {
+      size: A4;
+      margin: 15mm 20mm;
+    }
+
+    @media print {
+      body, html {
+        background: white !important;
+        color: black !important;
+      }
+
+      .print-button,
+      .nav-button,
+      .calendar-wrap,
+      .submit-row,
+      .toast,
+      .modal-backdrop,
+      .change-slot-btn,
+      footer {
+        display: none !important;
+      }
+
+      .polymath-header {
+        position: static;
+        border-bottom: 2px solid #ccc;
+        background: white !important;
+      }
+
+      main {
+        max-width: 100%;
+        padding: 10mm 0;
+        animation: none;
+      }
+
+      .stagger > * {
+        opacity: 1 !important;
+        animation: none !important;
+      }
+
+      .promise-banner,
+      .content-card,
+      .booking-form,
+      .trainer-card {
+        page-break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        background: white !important;
+      }
+
+      .promise-banner {
+        background: #FFF8EE !important;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      input, textarea {
+        background: white !important;
+        border: 1px solid #999 !important;
+      }
+    }
+
+    /* =========================================================
+       FAQ ACCORDION
+       ========================================================= */
+    .faq-card {
+      margin-bottom: var(--space-xl);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border-faint);
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: var(--space-md) 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--text-primary);
+      text-align: left;
+      font-size: 1rem;
+    }
+
+    .faq-question::after {
+      content: "+";
+      font-size: 1.5rem;
+      color: var(--accent-deep);
+      transition: transform 0.3s ease;
+      font-weight: normal;
+    }
+
+    .faq-item.open .faq-question::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 500px;
+      padding-bottom: var(--space-md);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================================================
+       HEADER
+       ==================================================== -->
+  <header class="polymath-header">
+    <img src="https://dl.dropboxusercontent.com/scl/fi/h40yjlyg8ldefwfaa3dib/polymath-logo-sticker.png?rlkey=o1ra4taqy79gt9t8u096v82zj"
+         alt="Polymath Learning Centre"
+         class="polymath-logo" />
+    <div class="header-right">
+      <button class="print-button" onclick="window.print()" aria-label="Print this page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        Print
+      </button>
+    </div>
+  </header>
+
+  <main class="stagger">
+
+    <!-- ====================================================
+         HERO
+         ==================================================== -->
+    <section class="hero">
+      <span class="hero-eyebrow">Complimentary AI workshop</span>
+      <h1>Free <span class="accent-word">2-Hour AI Training</span><br/>For Your Team</h1>
+      <p class="hero-sub">
+        I'll travel to your office and run a hands-on session that shows your staff how to use AI
+        to build simple webapps and 10× their daily workflows. First session is completely free —
+        no strings, no upsell, no catch.
+      </p>
+    </section>
+
+    <!-- ====================================================
+         PROMISE BANNER
+         ==================================================== -->
+    <section class="promise-banner">
+      <div class="promise-title">
+        <span class="promise-title-icon">✓</span>
+        No-strings-attached. Genuinely free.
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 8px;">
+        This is a real first-session-free offer. You're not signing up for anything afterwards.
+        You can take what you learn and walk away — no obligation, no follow-up sales pitch,
+        no hidden fees.
+      </p>
+      <div class="promise-grid">
+        <div class="promise-item">
+          <span class="promise-check">✓</span>
+          <div class="promise-item-text">
+            <strong>Free first session</strong>
+            <span>2 hours of training, no fee, no card on file.</span>
+          </div>
+        </div>
+        <div class="promise-item">
+          <span class="promise-check">✓</span>
+          <div class="promise-item-text">
+            <strong>I travel to you</strong>
+            <span>Anywhere in Singapore. Just provide the venue.</span>
+          </div>
+        </div>
+        <div class="promise-item">
+          <span class="promise-check">✓</span>
+          <div class="promise-item-text">
+            <strong>You provide the room</strong>
+            <span>Meeting room, projector or large screen, WiFi.</span>
+          </div>
+        </div>
+        <div class="promise-item">
+          <span class="promise-check">✓</span>
+          <div class="promise-item-text">
+            <strong>Staff bring laptops</strong>
+            <span>Hands-on means every trainee builds something.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         TRAINER PROFILE
+         ==================================================== -->
+    <section class="trainer-card">
+      <img src="https://dl.dropboxusercontent.com/scl/fi/mm6p6ed468n3fmdec5w5z/SY5_6308-Halfbody.jpg?rlkey=xnqxkyfp3l39t5qkfdveennge"
+           alt="Your AI training instructor"
+           class="trainer-photo" />
+      <div class="trainer-body">
+        <span class="trainer-eyebrow">Meet your trainer</span>
+        <h2>Led by an experienced educator</h2>
+        <p>
+          Your session is run personally by the founder of Polymath Learning Centre — a hands-on
+          educator who has spent over a decade helping people learn practical, real-world skills.
+        </p>
+        <ul class="trainer-credentials">
+          <li>
+            <span class="trainer-cred-icon">★</span>
+            <span>Founder of <strong>Polymath Learning Centre</strong> and <strong>CC Collectibles</strong></span>
+          </li>
+          <li>
+            <span class="trainer-cred-icon">★</span>
+            <span><strong>15 years</strong> of training experience</span>
+          </li>
+          <li>
+            <span class="trainer-cred-icon">★</span>
+            <span>Graduated from the <strong>National University of Singapore</strong></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         WHAT YOU'LL LEARN
+         ==================================================== -->
+    <section class="content-card">
+      <h2>What your team will learn</h2>
+      <p>
+        A practical, no-jargon walkthrough of where AI is today, what it can actually do for
+        your business, and how to use it as a daily productivity multiplier. The session is
+        hands-on — by the end, every participant will have built something real.
+      </p>
+      <ul class="session-curriculum">
+        <li><strong>AI Overview</strong> — what today's models can and can't do, in plain English</li>
+        <li><strong>Prompting fundamentals</strong> — how to ask AI for what you actually want</li>
+        <li><strong>10× your workflow</strong> — emails, reports, summaries, research, decks</li>
+        <li><strong>Building simple webapps with AI</strong> — turn manual processes into tools</li>
+        <li><strong>Live build session</strong> — each trainee creates an app tailored to their role</li>
+        <li><strong>Q&amp;A</strong> — bring your real problems, we'll work through them together</li>
+      </ul>
+    </section>
+
+    <!-- ====================================================
+         CALENDAR + SLOT PICKER
+         ==================================================== -->
+    <section class="calendar-wrap" id="calendarSection">
+      <div class="calendar-header">
+        <div class="calendar-title">Pick a date &amp; slot</div>
+        <div class="calendar-nav">
+          <button class="nav-button" id="prevMonthBtn" aria-label="Previous month">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <div class="month-label" id="monthLabel">—</div>
+          <button class="nav-button" id="nextMonthBtn" aria-label="Next month">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="calendar-grid" id="calendarGrid" style="position: relative;">
+        <!-- Day name headers -->
+        <div class="calendar-dayname">Mon</div>
+        <div class="calendar-dayname">Tue</div>
+        <div class="calendar-dayname">Wed</div>
+        <div class="calendar-dayname">Thu</div>
+        <div class="calendar-dayname">Fri</div>
+        <div class="calendar-dayname">Sat</div>
+        <div class="calendar-dayname">Sun</div>
+        <!-- Day cells injected by JS -->
+      </div>
+
+      <div class="calendar-legend">
+        <div class="legend-item"><span class="legend-swatch swatch-available"></span> Available (Mon–Fri only)</div>
+        <div class="legend-item"><span class="legend-swatch swatch-selected"></span> Selected</div>
+        <div class="legend-item"><span class="legend-swatch swatch-booked"></span> Unavailable / booked</div>
+      </div>
+
+      <!-- Slot picker (appears after date selected) -->
+      <div class="slot-picker" id="slotPicker" style="display: none;">
+        <div class="slot-picker-title">
+          Available 2-hour slots on <span class="slot-picker-date" id="slotPickerDateLabel"></span>
+        </div>
+        <div class="slot-options" id="slotOptions">
+          <!-- Slots injected by JS -->
+        </div>
+      </div>
+
+      <div class="loading-overlay" id="calendarLoading">
+        <div class="loading-spinner"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         BOOKING FORM
+         ==================================================== -->
+    <section class="booking-form" id="bookingForm">
+      <div class="form-header">
+        <h2>Your organisation's details</h2>
+        <p>I'll send a confirmation email once your slot is locked in.</p>
+      </div>
+
+      <!-- Selected slot summary -->
+      <div class="selected-summary" id="selectedSummary" style="display: none;">
+        <div class="selected-summary-icon">📅</div>
+        <div class="selected-summary-text">
+          <strong>Selected slot</strong>
+          <span id="selectedSlotText">—</span>
+        </div>
+        <button type="button" class="change-slot-btn" id="changeSlotBtn">Change</button>
+      </div>
+
+      <form id="trainingBookingForm" novalidate>
+        <div class="form-grid">
+
+          <div class="form-field full">
+            <label for="organisation">Organisation name <span class="required">*</span></label>
+            <input type="text" id="organisation" name="organisation"
+                   placeholder="e.g. Acme Pte Ltd" autocomplete="organization" required />
+            <div class="field-error">Please enter your organisation name.</div>
+          </div>
+
+          <div class="form-field">
+            <label for="numPax">Number of trainees (pax) <span class="required">*</span></label>
+            <input type="number" id="numPax" name="numPax"
+                   placeholder="e.g. 12" min="1" max="200" required />
+            <div class="field-hint">Roughly how many staff will attend?</div>
+            <div class="field-error">Please enter a valid number of trainees (1–200).</div>
+          </div>
+
+          <div class="form-field">
+            <label for="location">Location / Area <span class="required">*</span></label>
+            <input type="text" id="location" name="location"
+                   placeholder="e.g. CBD, Jurong East, One-North" required />
+            <div class="field-hint">General area helps with travel planning.</div>
+            <div class="field-error">Please enter the area or location.</div>
+          </div>
+
+          <div class="form-field full">
+            <label for="address">Full venue address <span class="required">*</span></label>
+            <textarea id="address" name="address" rows="2"
+                      placeholder="e.g. 8 Marina Boulevard #15-01, Marina Bay Financial Centre, Singapore 018981"
+                      required></textarea>
+            <div class="field-hint">Include unit number, building, and postal code.</div>
+            <div class="field-error">Please provide the full venue address.</div>
+          </div>
+
+          <div class="form-field">
+            <label for="contactName">Contact person's name <span class="required">*</span></label>
+            <input type="text" id="contactName" name="contactName"
+                   placeholder="e.g. Jane Tan" autocomplete="name" required />
+            <div class="field-error">Please enter the contact person's name.</div>
+          </div>
+
+          <div class="form-field">
+            <label for="contactNumber">Contact number <span class="required">*</span></label>
+            <input type="tel" id="contactNumber" name="contactNumber"
+                   placeholder="e.g. +65 9123 4567" autocomplete="tel"
+                   pattern="[0-9+\s\-()]{7,}" required />
+            <div class="field-hint">Mobile preferred so I can reach you on the day.</div>
+            <div class="field-error">Please enter a valid contact number.</div>
+          </div>
+
+          <div class="form-field full">
+            <label for="contactEmail">Contact email <span class="required">*</span></label>
+            <input type="email" id="contactEmail" name="contactEmail"
+                   placeholder="e.g. jane.tan@acme.com" autocomplete="email" required />
+            <div class="field-hint">I'll send the booking confirmation here.</div>
+            <div class="field-error">Please enter a valid email address.</div>
+          </div>
+
+          <div class="form-field full">
+            <label for="notes">Anything else I should know? <span style="color: var(--text-tertiary); font-weight: normal;">(optional)</span></label>
+            <textarea id="notes" name="notes" rows="3"
+                      placeholder="e.g. Specific workflows you'd like covered, team's AI familiarity level, parking notes, lift access, etc."></textarea>
+          </div>
+
+          <!-- Consent section -->
+          <div class="consent-section">
+            <label class="consent-row">
+              <input type="checkbox" id="consentVenue" required />
+              <span><strong>We will provide the venue, projector/screen, WiFi, and power outlets.</strong>
+                I understand the trainer travels to our office for this session.</span>
+            </label>
+            <label class="consent-row">
+              <input type="checkbox" id="consentLaptops" required />
+              <span><strong>Every trainee will bring their own laptop.</strong>
+                This is a hands-on session — staff without laptops will only be able to observe.</span>
+            </label>
+            <label class="consent-row">
+              <input type="checkbox" id="consentFree" required />
+              <span><strong>I understand this first session is completely free with no obligations.</strong>
+                No payment is required, no contract is signed.</span>
+            </label>
+          </div>
+
+        </div>
+
+        <div class="submit-row">
+          <button type="button" class="btn btn-ghost" id="resetBtn">Reset form</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn" disabled>
+            <span class="btn-label">Confirm booking</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ====================================================
+         FAQ
+         ==================================================== -->
+    <section class="content-card faq-card">
+      <h2>Common questions</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">Is this really free? What's the catch?</button>
+        <div class="faq-answer">
+          <p style="padding-top: 8px;">There's no catch. The first 2-hour session is genuinely free.
+          I run this offer because the best way for organisations to see the value of AI training
+          is to experience it. If you find it useful and want more sessions for advanced topics
+          or larger groups, we can talk about that afterwards — but only if you ask. There's no
+          automatic follow-up, no card on file, nothing.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">What do we need to prepare?</button>
+        <div class="faq-answer">
+          <p style="padding-top: 8px;">Three things: a meeting room or training room that fits
+          your team comfortably, a projector or large screen I can plug into, and reliable WiFi.
+          Each trainee should bring their own laptop (Windows or Mac, fully charged). No special
+          software needs to be installed in advance.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">How many people can attend?</button>
+        <div class="faq-answer">
+          <p style="padding-top: 8px;">Anywhere from 3 to about 30 works well in a single
+          session. Smaller groups (under 8) get more personalised attention; larger groups
+          (15+) get the workshop format. If you have more than 30 staff, we can split into
+          multiple sessions.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">What if we need to reschedule?</button>
+        <div class="faq-answer">
+          <p style="padding-top: 8px;">Just reply to the confirmation email with at least 48
+          hours notice and we'll find another slot that works. Last-minute cancellations are
+          fine but please let me know as early as possible.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">Why only mornings (9am–1.30pm)?</button>
+        <div class="faq-answer">
+          <p style="padding-top: 8px;">Mornings are when teams are sharpest for hands-on
+          learning, and it lets your staff return to their work in the afternoon. The two
+          available slots are 9:00am–11:00am and 11:30am–1:30pm, Monday to Friday.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================
+       SUCCESS MODAL
+       ==================================================== -->
+  <div class="modal-backdrop" id="successModal">
+    <div class="modal">
+      <div class="success-check">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 12 L10 18 L20 6"></path>
+        </svg>
+      </div>
+      <h3>Booking confirmed!</h3>
+      <p>Thanks for booking. You'll receive a confirmation at your email shortly, and I'll be
+      in touch a day or two before the session to finalise details.</p>
+
+      <div class="booking-recap" id="bookingRecap">
+        <!-- Populated by JS -->
+      </div>
+
+      <button class="btn btn-primary" id="closeModalBtn" style="margin: 0 auto;">Got it</button>
+    </div>
+  </div>
+
+  <div class="toast" id="errorToast"></div>
+
+  <!-- ====================================================
+       FOOTER
+       ==================================================== -->
+  <footer>
+    <p>
+      Polymath Learning Centre · Corporate AI Training · Singapore<br/>
+      Questions? Email <a href="mailto:admin@polymathlc.com.sg">admin@polymathlc.com.sg</a>
+    </p>
+  </footer>
+
+  <!-- ====================================================
+       FIREBASE SDKS
+       ==================================================== -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+  <!-- ====================================================
+       APPLICATION SCRIPT
+       ==================================================== -->
+  <script>
+    /* ===========================================================
+       FIREBASE INIT
+       =========================================================== */
+    const firebaseConfig = {
+      apiKey: "AIzaSyAUSI3Uh28IeqASEp0JhH4QPaVt-O3meBo",
+      authDomain: "mathgen--app.firebaseapp.com",
+      projectId: "mathgen--app",
+      storageBucket: "mathgen--app.firebasestorage.app",
+      messagingSenderId: "165654161198",
+      appId: "1:165654161198:web:16c8bd60eb3a2aa7edbcbf",
+      measurementId: "G-0MWZFG211D"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    // Anonymous sign-in so Firestore rules can permit writes
+    auth.signInAnonymously().catch(function(err) {
+      console.warn("Anonymous auth failed (continuing anyway):", err.message);
+    });
+
+    /* ===========================================================
+       CONSTANTS
+       =========================================================== */
+    const ADMIN_EMAIL = "admin@polymathlc.com.sg";
+    const COLLECTION_BOOKINGS = "aiTrainingBookings";
+    const COLLECTION_MAIL = "mail"; // Used by Firebase "Trigger Email" extension
+
+    // Two daily 2-hour slots: 9:00–11:00 and 11:30–13:30
+    const SLOTS = [
+      { id: "slot-0900", label: "9:00 AM – 11:00 AM", start: "09:00", end: "11:00" },
+      { id: "slot-1130", label: "11:30 AM – 1:30 PM", start: "11:30", end: "13:30" }
+    ];
+
+    const MONTH_NAMES = ["January","February","March","April","May","June",
+                         "July","August","September","October","November","December"];
+
+    /* ===========================================================
+       STATE
+       =========================================================== */
+    let viewYear, viewMonth; // Currently displayed month in the calendar
+    let selectedDate = null; // ISO yyyy-mm-dd
+    let selectedSlot = null; // slot id
+    let bookedSlotsCache = {}; // { 'yyyy-mm-dd': Set([slotIds]) }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    viewYear = today.getFullYear();
+    viewMonth = today.getMonth();
+
+    // Limit how far in the future we allow booking (3 months)
+    const maxViewYear = today.getFullYear();
+    const maxViewMonth = today.getMonth() + 3;
+
+    /* ===========================================================
+       DOM REFS
+       =========================================================== */
+    const monthLabel = document.getElementById("monthLabel");
+    const calendarGrid = document.getElementById("calendarGrid");
+    const prevMonthBtn = document.getElementById("prevMonthBtn");
+    const nextMonthBtn = document.getElementById("nextMonthBtn");
+    const slotPicker = document.getElementById("slotPicker");
+    const slotOptions = document.getElementById("slotOptions");
+    const slotPickerDateLabel = document.getElementById("slotPickerDateLabel");
+    const calendarLoading = document.getElementById("calendarLoading");
+    const selectedSummary = document.getElementById("selectedSummary");
+    const selectedSlotText = document.getElementById("selectedSlotText");
+    const changeSlotBtn = document.getElementById("changeSlotBtn");
+    const trainingForm = document.getElementById("trainingBookingForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const successModal = document.getElementById("successModal");
+    const bookingRecap = document.getElementById("bookingRecap");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const errorToast = document.getElementById("errorToast");
+
+    /* ===========================================================
+       UTIL
+       =========================================================== */
+    function pad(n) { return n < 10 ? "0" + n : "" + n; }
+
+    function dateToISO(d) {
+      return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+    }
+
+    function isoToReadable(iso) {
+      const [y, m, d] = iso.split("-").map(Number);
+      const date = new Date(y, m - 1, d);
+      const dayName = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][date.getDay()];
+      return dayName + ", " + d + " " + MONTH_NAMES[m - 1] + " " + y;
+    }
+
+    function getSlotById(slotId) {
+      return SLOTS.find(function(s) { return s.id === slotId; });
+    }
+
+    function showToast(message, type) {
+      type = type || "error";
+      errorToast.textContent = message;
+      errorToast.style.background = type === "error" ? "var(--danger-tint)" : "var(--success-tint)";
+      errorToast.style.color = type === "error" ? "var(--danger)" : "var(--success)";
+      errorToast.style.borderColor = type === "error" ? "var(--danger)" : "var(--success)";
+      errorToast.classList.add("show");
+      setTimeout(function() {
+        errorToast.classList.remove("show");
+      }, 4500);
+    }
+
+    /* ===========================================================
+       CALENDAR RENDERING
+       =========================================================== */
+    function renderCalendar() {
+      // Update month label
+      monthLabel.textContent = MONTH_NAMES[viewMonth] + " " + viewYear;
+
+      // Update nav button states
+      const isViewingCurrentMonth = (viewYear === today.getFullYear() && viewMonth === today.getMonth());
+      prevMonthBtn.disabled = isViewingCurrentMonth;
+
+      // Limit forward navigation to 3 months out
+      const limitDate = new Date(today.getFullYear(), today.getMonth() + 3, 1);
+      const currentViewDate = new Date(viewYear, viewMonth, 1);
+      nextMonthBtn.disabled = currentViewDate >= limitDate;
+
+      // Clear existing day cells (keep day name headers)
+      const existingCells = calendarGrid.querySelectorAll(".calendar-cell");
+      existingCells.forEach(function(c) { c.remove(); });
+
+      // First day of month
+      const firstOfMonth = new Date(viewYear, viewMonth, 1);
+      // Day of week — convert Sunday(0) to 6, Monday(1) to 0, etc. (Monday-first)
+      let firstDayCol = firstOfMonth.getDay() - 1;
+      if (firstDayCol < 0) firstDayCol = 6;
+
+      // Days in this month
+      const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+      // Insert empty leading cells
+      for (let i = 0; i < firstDayCol; i++) {
+        const empty = document.createElement("div");
+        empty.className = "calendar-cell empty";
+        calendarGrid.appendChild(empty);
+      }
+
+      // Insert day cells
+      for (let dayNum = 1; dayNum <= daysInMonth; dayNum++) {
+        const cellDate = new Date(viewYear, viewMonth, dayNum);
+        cellDate.setHours(0, 0, 0, 0);
+        const iso = dateToISO(cellDate);
+        const dayOfWeek = cellDate.getDay(); // 0=Sun,6=Sat
+
+        const cell = document.createElement("div");
+        cell.className = "calendar-cell";
+        cell.dataset.date = iso;
+
+        const dayNumEl = document.createElement("span");
+        dayNumEl.textContent = dayNum;
+        cell.appendChild(dayNumEl);
+
+        // Mark today
+        if (cellDate.getTime() === today.getTime()) {
+          cell.classList.add("today");
+        }
+
+        // Determine cell state
+        if (cellDate < today) {
+          cell.classList.add("past");
+        } else if (dayOfWeek === 0 || dayOfWeek === 6) {
+          cell.classList.add("weekend");
+        } else {
+          // Weekday — check booking cache
+          const bookedSet = bookedSlotsCache[iso] || new Set();
+          if (bookedSet.size >= SLOTS.length) {
+            cell.classList.add("fully-booked");
+            const dot = document.createElement("div");
+            dot.className = "availability-dot";
+            cell.appendChild(dot);
+          } else {
+            cell.classList.add("available");
+            const dot = document.createElement("div");
+            dot.className = "availability-dot";
+            cell.appendChild(dot);
+
+            // Restore selection if this is the selected date
+            if (selectedDate === iso) {
+              cell.classList.add("selected");
+            }
+
+            cell.addEventListener("click", function() {
+              handleDateClick(iso);
+            });
+          }
+        }
+
+        calendarGrid.appendChild(cell);
+      }
+    }
+
+    /* ===========================================================
+       LOAD EXISTING BOOKINGS FOR VISIBLE RANGE
+       =========================================================== */
+    function loadBookingsForCurrentView() {
+      calendarLoading.classList.add("active");
+
+      // Pull bookings for the visible month (and a buffer)
+      const rangeStart = dateToISO(new Date(viewYear, viewMonth, 1));
+      const rangeEnd = dateToISO(new Date(viewYear, viewMonth + 1, 0));
+
+      db.collection(COLLECTION_BOOKINGS)
+        .where("date", ">=", rangeStart)
+        .where("date", "<=", rangeEnd)
+        .get()
+        .then(function(snapshot) {
+          // Reset cache for this range
+          snapshot.forEach(function(doc) {
+            const data = doc.data();
+            if (!data || !data.date || !data.slotId) return;
+            if (data.status === "cancelled") return;
+            if (!bookedSlotsCache[data.date]) {
+              bookedSlotsCache[data.date] = new Set();
+            }
+            bookedSlotsCache[data.date].add(data.slotId);
+          });
+          renderCalendar();
+          // If a date is currently selected, refresh its slot picker too
+          if (selectedDate) {
+            renderSlotPicker(selectedDate);
+          }
+        })
+        .catch(function(err) {
+          console.warn("Could not load bookings:", err.message);
+          // Still render the calendar — just without availability info
+          renderCalendar();
+        })
+        .finally(function() {
+          calendarLoading.classList.remove("active");
+        });
+    }
+
+    /* ===========================================================
+       SLOT PICKER
+       =========================================================== */
+    function handleDateClick(iso) {
+      selectedDate = iso;
+      selectedSlot = null;
+      renderCalendar(); // Re-render to show selection highlight
+      renderSlotPicker(iso);
+      updateSelectedSummary();
+      updateSubmitState();
+
+      // Smooth scroll to slot picker
+      setTimeout(function() {
+        slotPicker.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 100);
+    }
+
+    function renderSlotPicker(iso) {
+      slotPicker.style.display = "block";
+      slotPickerDateLabel.textContent = isoToReadable(iso);
+      slotOptions.innerHTML = "";
+
+      const bookedSet = bookedSlotsCache[iso] || new Set();
+
+      SLOTS.forEach(function(slot) {
+        const isBooked = bookedSet.has(slot.id);
+
+        const opt = document.createElement("button");
+        opt.type = "button";
+        opt.className = "slot-option";
+        if (isBooked) opt.classList.add("booked");
+        if (selectedSlot === slot.id) opt.classList.add("selected");
+        opt.disabled = isBooked;
+
+        const time = document.createElement("div");
+        time.className = "slot-time";
+        time.textContent = slot.label;
+        opt.appendChild(time);
+
+        const meta = document.createElement("div");
+        meta.className = "slot-meta";
+        meta.textContent = "2 hours · Hands-on workshop";
+        opt.appendChild(meta);
+
+        const status = document.createElement("div");
+        status.className = "slot-status " + (isBooked ? "taken" : "available");
+        status.textContent = isBooked ? "Already booked" : "Available";
+        opt.appendChild(status);
+
+        if (!isBooked) {
+          opt.addEventListener("click", function() {
+            selectedSlot = slot.id;
+            renderSlotPicker(iso);
+            updateSelectedSummary();
+            updateSubmitState();
+          });
+        }
+
+        slotOptions.appendChild(opt);
+      });
+    }
+
+    /* ===========================================================
+       SELECTED SUMMARY
+       =========================================================== */
+    function updateSelectedSummary() {
+      if (selectedDate && selectedSlot) {
+        const slot = getSlotById(selectedSlot);
+        selectedSummary.style.display = "flex";
+        selectedSlotText.textContent = isoToReadable(selectedDate) + " · " + slot.label;
+      } else {
+        selectedSummary.style.display = "none";
+      }
+    }
+
+    changeSlotBtn.addEventListener("click", function() {
+      document.getElementById("calendarSection").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    /* ===========================================================
+       CALENDAR NAVIGATION
+       =========================================================== */
+    prevMonthBtn.addEventListener("click", function() {
+      viewMonth--;
+      if (viewMonth < 0) {
+        viewMonth = 11;
+        viewYear--;
+      }
+      loadBookingsForCurrentView();
+    });
+
+    nextMonthBtn.addEventListener("click", function() {
+      viewMonth++;
+      if (viewMonth > 11) {
+        viewMonth = 0;
+        viewYear++;
+      }
+      loadBookingsForCurrentView();
+    });
+
+    /* ===========================================================
+       FORM VALIDATION
+       =========================================================== */
+    function validateField(field) {
+      const wrapper = field.closest(".form-field");
+      if (!wrapper) return true;
+
+      const value = field.value.trim();
+      let isValid = true;
+
+      if (field.required && value === "") {
+        isValid = false;
+      } else if (field.type === "email" && value !== "") {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        isValid = emailRegex.test(value);
+      } else if (field.type === "tel" && value !== "") {
+        const telRegex = /^[0-9+\s\-()]{7,}$/;
+        isValid = telRegex.test(value);
+      } else if (field.type === "number" && value !== "") {
+        const n = parseInt(value, 10);
+        const min = field.min ? parseInt(field.min, 10) : -Infinity;
+        const max = field.max ? parseInt(field.max, 10) : Infinity;
+        isValid = !isNaN(n) && n >= min && n <= max;
+      }
+
+      if (isValid) {
+        wrapper.classList.remove("error");
+      } else {
+        wrapper.classList.add("error");
+      }
+      return isValid;
+    }
+
+    function validateAllFields() {
+      const requiredFields = trainingForm.querySelectorAll("input[required], textarea[required]");
+      let allValid = true;
+      requiredFields.forEach(function(f) {
+        if (!validateField(f)) allValid = false;
+      });
+
+      // Check consent checkboxes
+      const consentBoxes = trainingForm.querySelectorAll(".consent-row input[type='checkbox']");
+      let allChecked = true;
+      consentBoxes.forEach(function(cb) {
+        if (!cb.checked) allChecked = false;
+      });
+      if (!allChecked) allValid = false;
+
+      // Must have a slot
+      if (!selectedDate || !selectedSlot) allValid = false;
+
+      return allValid;
+    }
+
+    // Live validation on blur
+    trainingForm.querySelectorAll("input, textarea").forEach(function(f) {
+      f.addEventListener("blur", function() { validateField(f); updateSubmitState(); });
+      f.addEventListener("input", function() {
+        if (f.closest(".form-field").classList.contains("error")) {
+          validateField(f);
+        }
+        updateSubmitState();
+      });
+    });
+
+    trainingForm.querySelectorAll(".consent-row input[type='checkbox']").forEach(function(cb) {
+      cb.addEventListener("change", updateSubmitState);
+    });
+
+    function updateSubmitState() {
+      // Lightweight check — only enables the button when all conditions met
+      const hasSlot = selectedDate && selectedSlot;
+      const allConsent = Array.from(trainingForm.querySelectorAll(".consent-row input[type='checkbox']"))
+        .every(function(cb) { return cb.checked; });
+      const requiredFields = trainingForm.querySelectorAll("input[required], textarea[required]");
+      let fieldsFilled = true;
+      requiredFields.forEach(function(f) {
+        if (f.value.trim() === "") fieldsFilled = false;
+      });
+      submitBtn.disabled = !(hasSlot && allConsent && fieldsFilled);
+    }
+
+    /* ===========================================================
+       SUBMIT BOOKING
+       =========================================================== */
+    trainingForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      submitBooking();
+    });
+
+    async function submitBooking() {
+      if (!validateAllFields()) {
+        showToast("Please complete all required fields and confirmations.");
+        return;
+      }
+
+      // Lock the button
+      submitBtn.classList.add("btn-loading");
+      submitBtn.disabled = true;
+      const originalLabel = submitBtn.querySelector(".btn-label").textContent;
+      submitBtn.querySelector(".btn-label").textContent = "Confirming...";
+      const spinner = document.createElement("div");
+      spinner.className = "btn-spinner";
+      submitBtn.appendChild(spinner);
+
+      const formData = {
+        organisation: document.getElementById("organisation").value.trim(),
+        numPax: parseInt(document.getElementById("numPax").value, 10),
+        location: document.getElementById("location").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        contactName: document.getElementById("contactName").value.trim(),
+        contactNumber: document.getElementById("contactNumber").value.trim(),
+        contactEmail: document.getElementById("contactEmail").value.trim(),
+        notes: document.getElementById("notes").value.trim()
+      };
+
+      const slot = getSlotById(selectedSlot);
+      const bookingDate = selectedDate;
+
+      try {
+        // === Step 1: Re-check slot availability (race-condition guard) ===
+        const conflictSnap = await db.collection(COLLECTION_BOOKINGS)
+          .where("date", "==", bookingDate)
+          .where("slotId", "==", selectedSlot)
+          .where("status", "==", "confirmed")
+          .get();
+
+        if (!conflictSnap.empty) {
+          throw new Error("That slot was just booked by someone else. Please pick another.");
+        }
+
+        // === Step 2: Save booking ===
+        const bookingDoc = {
+          date: bookingDate,
+          slotId: selectedSlot,
+          slotLabel: slot.label,
+          slotStart: slot.start,
+          slotEnd: slot.end,
+          organisation: formData.organisation,
+          numPax: formData.numPax,
+          location: formData.location,
+          address: formData.address,
+          contactName: formData.contactName,
+          contactNumber: formData.contactNumber,
+          contactEmail: formData.contactEmail,
+          notes: formData.notes,
+          status: "confirmed",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          source: "ai-training-booking-webapp"
+        };
+
+        const bookingRef = await db.collection(COLLECTION_BOOKINGS).add(bookingDoc);
+
+        // === Step 3: Queue admin notification email ===
+        // This uses the Firebase "Trigger Email" extension pattern.
+        // Documents added to the "mail" collection are picked up and sent automatically.
+        // If the extension isn't installed, the doc just sits there harmlessly — you'll still
+        // see the booking in the aiTrainingBookings collection.
+        const adminEmailBody = buildAdminEmailHTML(bookingDoc, bookingRef.id);
+        await db.collection(COLLECTION_MAIL).add({
+          to: [ADMIN_EMAIL],
+          message: {
+            subject: "🎓 New AI Training Booking — " + formData.organisation + " (" + isoToReadable(bookingDate) + ")",
+            html: adminEmailBody,
+            text: buildAdminEmailText(bookingDoc, bookingRef.id)
+          },
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          relatedBookingId: bookingRef.id
+        });
+
+        // === Step 4: Queue confirmation email to the customer ===
+        await db.collection(COLLECTION_MAIL).add({
+          to: [formData.contactEmail],
+          message: {
+            subject: "Your AI training session is booked — " + isoToReadable(bookingDate),
+            html: buildCustomerEmailHTML(bookingDoc, bookingRef.id),
+            text: buildCustomerEmailText(bookingDoc, bookingRef.id)
+          },
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          relatedBookingId: bookingRef.id
+        });
+
+        // === Step 5: Update local cache so the slot shows as booked immediately ===
+        if (!bookedSlotsCache[bookingDate]) {
+          bookedSlotsCache[bookingDate] = new Set();
+        }
+        bookedSlotsCache[bookingDate].add(selectedSlot);
+
+        // === Step 6: Show success modal ===
+        showSuccessModal(bookingDoc, bookingRef.id);
+
+        // Reset form state
+        trainingForm.reset();
+        selectedDate = null;
+        selectedSlot = null;
+        renderCalendar();
+        slotPicker.style.display = "none";
+        updateSelectedSummary();
+
+      } catch (err) {
+        console.error("Booking error:", err);
+        showToast(err.message || "Something went wrong. Please try again or email admin@polymathlc.com.sg.");
+      } finally {
+        // Restore button
+        submitBtn.classList.remove("btn-loading");
+        submitBtn.querySelector(".btn-label").textContent = originalLabel;
+        if (spinner.parentNode) spinner.parentNode.removeChild(spinner);
+        updateSubmitState();
+      }
+    }
+
+    /* ===========================================================
+       EMAIL TEMPLATES
+       =========================================================== */
+    function buildAdminEmailHTML(b, id) {
+      return `
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 620px; margin: 0 auto; color: #1A1A1A; line-height: 1.6;">
+          <div style="background: #FFE0B2; padding: 24px; border-radius: 12px 12px 0 0; text-align: center;">
+            <h1 style="margin: 0; color: #E65100; font-size: 22px;">🎓 New AI Training Booking</h1>
+          </div>
+          <div style="background: #FFFFFF; padding: 24px; border: 1px solid #ECEAE5; border-top: none; border-radius: 0 0 12px 12px;">
+            <p style="font-size: 16px; margin-top: 0;">A new training session has been booked through the website.</p>
+
+            <h3 style="color: #E65100; margin-top: 24px; border-bottom: 2px solid #FFE0B2; padding-bottom: 6px;">📅 Session</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr><td style="padding: 6px 0; color: #888;">Date</td><td style="padding: 6px 0; font-weight: bold;">${isoToReadable(b.date)}</td></tr>
+              <tr><td style="padding: 6px 0; color: #888;">Time</td><td style="padding: 6px 0; font-weight: bold;">${b.slotLabel}</td></tr>
+            </table>
+
+            <h3 style="color: #E65100; margin-top: 24px; border-bottom: 2px solid #FFE0B2; padding-bottom: 6px;">🏢 Organisation</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr><td style="padding: 6px 0; color: #888; width: 130px;">Name</td><td style="padding: 6px 0; font-weight: bold;">${escapeHtml(b.organisation)}</td></tr>
+              <tr><td style="padding: 6px 0; color: #888;">Trainees</td><td style="padding: 6px 0; font-weight: bold;">${b.numPax} pax</td></tr>
+              <tr><td style="padding: 6px 0; color: #888;">Area</td><td style="padding: 6px 0;">${escapeHtml(b.location)}</td></tr>
+              <tr><td style="padding: 6px 0; color: #888; vertical-align: top;">Full address</td><td style="padding: 6px 0;">${escapeHtml(b.address).replace(/\n/g, "<br/>")}</td></tr>
+            </table>
+
+            <h3 style="color: #E65100; margin-top: 24px; border-bottom: 2px solid #FFE0B2; padding-bottom: 6px;">👤 Contact</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr><td style="padding: 6px 0; color: #888; width: 130px;">Name</td><td style="padding: 6px 0; font-weight: bold;">${escapeHtml(b.contactName)}</td></tr>
+              <tr><td style="padding: 6px 0; color: #888;">Phone</td><td style="padding: 6px 0;"><a href="tel:${escapeHtml(b.contactNumber)}" style="color: #E65100;">${escapeHtml(b.contactNumber)}</a></td></tr>
+              <tr><td style="padding: 6px 0; color: #888;">Email</td><td style="padding: 6px 0;"><a href="mailto:${escapeHtml(b.contactEmail)}" style="color: #E65100;">${escapeHtml(b.contactEmail)}</a></td></tr>
+            </table>
+
+            ${b.notes ? `
+              <h3 style="color: #E65100; margin-top: 24px; border-bottom: 2px solid #FFE0B2; padding-bottom: 6px;">📝 Notes</h3>
+              <p style="background: #FFF8EE; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${escapeHtml(b.notes)}</p>
+            ` : ""}
+
+            <p style="margin-top: 28px; padding: 12px; background: #F7F7F5; border-radius: 8px; font-size: 13px; color: #666;">
+              <strong>Booking ID:</strong> ${id}<br/>
+              <strong>Submitted via:</strong> ai-training-booking-webapp
+            </p>
+          </div>
+          <p style="text-align: center; color: #888; font-size: 12px; margin-top: 16px;">
+            Polymath Learning Centre · Corporate AI Training
+          </p>
+        </div>
+      `;
+    }
+
+    function buildAdminEmailText(b, id) {
+      return [
+        "NEW AI TRAINING BOOKING",
+        "=======================",
+        "",
+        "SESSION",
+        "Date:  " + isoToReadable(b.date),
+        "Time:  " + b.slotLabel,
+        "",
+        "ORGANISATION",
+        "Name:     " + b.organisation,
+        "Trainees: " + b.numPax + " pax",
+        "Area:     " + b.location,
+        "Address:  " + b.address,
+        "",
+        "CONTACT",
+        "Name:  " + b.contactName,
+        "Phone: " + b.contactNumber,
+        "Email: " + b.contactEmail,
+        b.notes ? "\nNOTES\n" + b.notes : "",
+        "",
+        "Booking ID: " + id
+      ].join("\n");
+    }
+
+    function buildCustomerEmailHTML(b, id) {
+      return `
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 620px; margin: 0 auto; color: #1A1A1A; line-height: 1.6;">
+          <div style="background: linear-gradient(135deg, #FFE0B2, #FFF4E4); padding: 32px 24px; border-radius: 12px 12px 0 0; text-align: center;">
+            <h1 style="margin: 0; color: #E65100; font-size: 24px;">✓ You're booked in!</h1>
+            <p style="margin: 8px 0 0; color: #666;">Polymath Learning Centre · AI Training</p>
+          </div>
+          <div style="background: #FFFFFF; padding: 28px 24px; border: 1px solid #ECEAE5; border-top: none; border-radius: 0 0 12px 12px;">
+            <p style="font-size: 16px; margin-top: 0;">Hi ${escapeHtml(b.contactName)},</p>
+            <p>Thanks for booking a free AI training session for <strong>${escapeHtml(b.organisation)}</strong>. Here are your details:</p>
+
+            <div style="background: #FFF8EE; border: 1px solid #FFE0B2; border-radius: 10px; padding: 20px; margin: 20px 0;">
+              <p style="margin: 0 0 8px; color: #E65100; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold;">Your session</p>
+              <p style="margin: 0; font-size: 20px; font-weight: bold;">${isoToReadable(b.date)}</p>
+              <p style="margin: 4px 0 0; font-size: 16px;">${b.slotLabel}</p>
+              <p style="margin: 12px 0 0; color: #555;">at ${escapeHtml(b.address)}</p>
+              <p style="margin: 4px 0 0; color: #888; font-size: 14px;">${b.numPax} trainees expected</p>
+            </div>
+
+            <h3 style="color: #E65100; margin-top: 24px;">A quick reminder of what's needed on the day</h3>
+            <ul style="padding-left: 20px;">
+              <li><strong>Venue:</strong> Meeting / training room your team is comfortable in</li>
+              <li><strong>Tech:</strong> Projector or large screen, reliable WiFi, power outlets</li>
+              <li><strong>Laptops:</strong> Every trainee brings their own (charged)</li>
+              <li><strong>Trainer:</strong> I'll travel to your office — please let me know if there's anything specific I need to know about access</li>
+            </ul>
+
+            <p style="margin-top: 24px;">I'll reach out 1–2 days before the session to confirm details and any last-minute logistics. If you need to reschedule or have questions, just reply to this email or contact <a href="mailto:admin@polymathlc.com.sg" style="color: #E65100;">admin@polymathlc.com.sg</a>.</p>
+
+            <p style="background: #E8F5E9; padding: 12px 16px; border-radius: 8px; color: #2E7D32; margin-top: 24px;">
+              <strong>Reminder:</strong> This first session is completely free with no obligations. No payment, no contract, no follow-up sales pitch.
+            </p>
+
+            <p style="margin-top: 24px; color: #666; font-size: 13px;">Booking reference: ${id}</p>
+          </div>
+          <p style="text-align: center; color: #888; font-size: 12px; margin-top: 16px;">
+            Polymath Learning Centre · Singapore
+          </p>
+        </div>
+      `;
+    }
+
+    function buildCustomerEmailText(b, id) {
+      return [
+        "YOU'RE BOOKED IN!",
+        "Polymath Learning Centre · AI Training",
+        "",
+        "Hi " + b.contactName + ",",
+        "",
+        "Thanks for booking a free AI training session for " + b.organisation + ".",
+        "",
+        "YOUR SESSION",
+        isoToReadable(b.date),
+        b.slotLabel,
+        "at " + b.address,
+        b.numPax + " trainees expected",
+        "",
+        "WHAT'S NEEDED ON THE DAY",
+        "- Venue: meeting / training room",
+        "- Tech: projector or large screen, WiFi, power",
+        "- Laptops: every trainee brings their own (charged)",
+        "- Trainer: I'll travel to your office",
+        "",
+        "I'll reach out 1–2 days before to confirm details. Reply to this email or contact admin@polymathlc.com.sg if anything comes up.",
+        "",
+        "Reminder: This first session is completely free with no obligations.",
+        "",
+        "Booking reference: " + id
+      ].join("\n");
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    /* ===========================================================
+       SUCCESS MODAL
+       =========================================================== */
+    function showSuccessModal(booking, id) {
+      bookingRecap.innerHTML = `
+        <div class="booking-recap-row"><span>DATE</span><span>${isoToReadable(booking.date)}</span></div>
+        <div class="booking-recap-row"><span>TIME</span><span>${booking.slotLabel}</span></div>
+        <div class="booking-recap-row"><span>ORGANISATION</span><span>${escapeHtml(booking.organisation)}</span></div>
+        <div class="booking-recap-row"><span>TRAINEES</span><span>${booking.numPax} pax</span></div>
+        <div class="booking-recap-row"><span>CONTACT</span><span>${escapeHtml(booking.contactName)}</span></div>
+        <div class="booking-recap-row"><span>REF</span><span style="font-size: 0.78rem; font-family: monospace;">${id.substring(0, 12)}</span></div>
+      `;
+      successModal.classList.add("active");
+    }
+
+    closeModalBtn.addEventListener("click", function() {
+      successModal.classList.remove("active");
+      // Scroll back to top after closing
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Close on backdrop click
+    successModal.addEventListener("click", function(e) {
+      if (e.target === successModal) {
+        successModal.classList.remove("active");
+      }
+    });
+
+    /* ===========================================================
+       RESET FORM
+       =========================================================== */
+    resetBtn.addEventListener("click", function() {
+      if (!confirm("Reset the form and clear your slot selection?")) return;
+      trainingForm.reset();
+      selectedDate = null;
+      selectedSlot = null;
+      renderCalendar();
+      slotPicker.style.display = "none";
+      updateSelectedSummary();
+      updateSubmitState();
+      // Clear any error states
+      trainingForm.querySelectorAll(".form-field.error").forEach(function(el) {
+        el.classList.remove("error");
+      });
+    });
+
+    /* ===========================================================
+       FAQ ACCORDION
+       =========================================================== */
+    document.querySelectorAll(".faq-question").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        const item = btn.closest(".faq-item");
+        item.classList.toggle("open");
+      });
+    });
+
+    /* ===========================================================
+       INIT
+       =========================================================== */
+    renderCalendar();
+    loadBookingsForCurrentView();
+    updateSubmitState();
+
+  </script>
+</body>
+</html>
